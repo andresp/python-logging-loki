@@ -135,8 +135,8 @@ class LokiEmitterV1(LokiEmitter):
     def build_payload(self, record: logging.LogRecord, line) -> dict:
         """Build JSON payload with a log entry."""
         labels = self.build_tags(record)
-        ns = 1e6
-        ts = str(int(record.created) * ns)
+        ns = 1e9
+        ts = str(int(record.created * ns))
         stream = {
             "stream": labels,
             "values": [[ts, line]],
