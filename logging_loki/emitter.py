@@ -2,6 +2,7 @@
 
 import abc
 import copy
+from datetime import datetime
 import functools
 import logging
 import time
@@ -134,7 +135,7 @@ class LokiEmitterV1(LokiEmitter):
     def build_payload(self, record: logging.LogRecord, line) -> dict:
         """Build JSON payload with a log entry."""
         labels = self.build_tags(record)
-        ts = rfc3339.format_microsecond(record.created) * 1000
+        ts = datetime.fromisoformat(record.created).time().time_ns()
         stream = {
             "stream": labels,
             "values": [[ts, line]],
